@@ -1,52 +1,106 @@
-# EXP-4-Home-Automation-System-with-IOT
+# EXP-3-B-Automatic-street-light-systems-using-LDR-sensor
 
-# Aim:
-	To make a Lamp at home (230 V AC) On / Off using ESP8266, IFTT Google Assistance and Blynk IoT mobile application. 
-# Hardware / Software Tools required :
-PC with Internet connection
-Micro USB cable
-Wifi connection for ESP8266 (Use any mobile hotspot or Router)
-ESP8266 Board
-Mobile Phone with Blynk App installed
-IFTT for Google Voice Assistance
-9 W Bulb and Relay control
-Arduino software 
-Jumper Wires
+## Aim: 
+To measure the LDR Sensor using Photoresistor with Arduino UNO Board/ESP-32 using Tinker CAD.
+## Hardware / Software Tools required:
 
-# Circuit Diagram:
+	PC/ Laptop with Internet connection
+	Tinker CAD tool (Online)
+	Arduino UNO 
+	Board/ESP-32
+	Photoresistor
+  
+## Circuit Diagram:
+<img width="1285" height="710" alt="Screenshot 2025-11-10 214315" src="https://github.com/user-attachments/assets/79ee4e62-7f60-4ff3-939d-ed4818fecb3c" />
 
 
-# Theory: 
+## Theory :
+
+ The Arduino Uno is powered by the ATmega328P, an 8-bit microcontroller that runs at 16 MHz. It has 32 KB of flash memory, 2 KB of SRAM, and 1 KB of EEPROM. The board has 14 digital I/O pins (of which 6 can be used as PWM outputs) and 6 analog input pins. These pins allow the board to interface with various sensors, actuators, and other devices.The Arduino Uno can be powered via a USB connection or an external power supply. The board has a built-in voltage regulator to manage power from 7 to 12 volts.
+The board is programmable using the Arduino IDE (Integrated Development Environment), which supports a simplified version of C/C++. The code, known as a "sketch," is uploaded to the board via a USB connection. The Uno has a USB-B port, which is used for communication with a computer. The USB connection also powers the board when connected. The board includes a reset button that restarts the microcontroller, useful during programming and troubleshooting. The In-Circuit Serial Programming (ICSP) header allows for low-level programming of the microcontroller or firmware updates. The Uno has a built-in LED on pin 13, commonly used for simple tests and debugging.
+
+## Procedure:
+
+### Step 1: 
+	Set Up the Tinkercad Environment
+•	Log in to Tinkercad: Open Tinkercad in your web browser and log in to your account.
+•	Create a New Circuit: In the Tinkercad dashboard, click on "Circuits" and then select "Create New Circuit."
+### Step 2: 
+
+	Add Components to the Circuit
+•	Arduino Uno: Drag an Arduino Uno board from the components panel onto the workspace.
+•	LDR Sensor: Search for the Photoresistor in the components panel and drag it into the workspace.
+•	Breadboard: Drag a small breadboard to the workspace to help with wiring connections.
+•	Resistor (Optional): A resistor may not be necessary for this simple setup, but you can include it for more accurate readings.
+•	Wires: Use wires to connect the components.
+
+### Step 3: 
+	Connect the LDR Sensor to the Arduino
+•	LDR Sensor Pins: The LDR has two terminals (pins).
+•	One LDR Pin to 5V: Connect one terminal of the LDR to the Arduino 5V pin.
+•	Other LDR Pin to Analog Input and Resistor:
+o	Connect the other terminal of the LDR to one end of a fixed resistor (e.g., 10kΩ).
+o	Also connect this same LDR terminal to an Arduino analog input pin (e.g., A1).
+•	Resistor to GND: Connect the other end of the resistor to the Arduino GND pin.
+•	Breadboard Setup (Optional):
+o	Place the LDR and resistor on the breadboard forming a voltage divider between 5V and GND.
+o	The middle point (between LDR and resistor) connects to the Arduino analog input pin.
+
+### Step 4: Write the Arduino Code
+
+•	Code Editor: Click on the "Code" button at the top of the Tinkercad workspace to open the code editor.
+•	Set the Coding Mode: Ensure the editor is in "Text" mode to write your code in C/C++.
+•	Enter the Code: Write the following code from the photoresistor
+
+### Step 5: Simulate the Circuit
+
+•	Start Simulation: Click the "Start Simulation" button at the top of the workspace to run the circuit and code.
+•	Monitor Output: Open the serial monitor by clicking the "Serial Monitor" button to view the temperature readings in both Celsius and Fahrenheit.
+
+### Step 6: Troubleshoot and Refine
+•	Check Connections: Ensure that all connections are made correctly on the breadboard and the Arduino.
+•	Adjust Code: If needed, tweak the code to improve accuracy or change the format of the output.
+
+### Step 7: Save Your Work
+•	Stop Simulation: Click "Stop Simulation" to end the simulation.
+•	Save the Circuit: Click "Save" to keep your circuit design and code for future use.
+
+## Code:
+~~~
+const int LEDPin=13;
+const int LDRPin=A0;
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(LEDPin,OUTPUT);
+  pinMode(LDRPin,INPUT);
+}
+void loop()
+{
+  int LDRStatus=analogRead(LDRPin);
+  if(LDRStatus<=500)
+  {
+    digitalWrite(LEDPin,HIGH);
+    Serial.print("Current Light Intensity Value is -");
+    Serial.println(LDRStatus);
+  }
+  else
+  {
+    digitalWrite(LEDPin, LOW);
+    Serial.print("Current Light Intensity Value is -");
+    Serial.println(LDRStatus);
+  }
+}
 
 
-Blynk is an IoT platform for iOS or Android smartphones that is used to control Arduino, Raspberry Pi and NodeMCU via the Internet. This application is used to create a graphical interface or human machine interface (HMI) by compiling and providing the appropriate address on the available widgets.In this experiment we use ESP8266 to control a 220-volt lamp from a web server. But you can also use the same procedure to control fans, lights, AC, or other electrical devices that you want to control remotely.
-Relay is an electromechanical device that is used as a switch between high current and low current devices. When the coil in the relay gets fully energized, the contact shifts from the normally open position to the normally closed position. Light bulbs usually operate on 120V or 220V AC power supply. We cannot interface these AC loads directly with the ESP8266 development board, or it will damage the board. We have to use a relay between the ESP8266 and the lamp. 
-Google Assistant and IFTTT work together to let you control services with voice commands. When you say a set phrase, Google Assistant processes it and sends it to IFTTT as a trigger. If the phrase matches an applet you've created, IFTTT performs the linked action—like turning on a light or sending a message. Everything runs in the cloud, making it easy to automate tasks with just your voice, as long as the command is correctly matched and all services are online.
-When we apply an active high signal to the signal pin of the relay module from any microcontroller like ESP8266, the relay contact moves from the normally open to the normally closed position. It makes the circuit complete, and the output load turns on.
-
-
-# Program:
+~~~
 
 
 
-# Procedure:
-•	Make the circuit connection as per the diagram. In the mobile, download and “Blynq IoT” application using Google play store and Install it. Create log in ID and Password.
-•	Connect the IN pin of the Relay module to D1 pin of NodeMCU (ESP8266).
-•	Connect VCC of the Relay of NodeMCU. Connect GND of the Relay to GND of NodeMCU. 
-•	Connect your AC bulb to the Relay’s switch terminal securely.
-•	Install ESP8266 board in Arduino IDE via Board Manager. Select board: NodeMCU 1.0 (ESP-12E Module).
-•	Include necessary libraries: ESP8266WiFi and ESP8266WebServer.
-•	In the code, configure Wi-Fi SSID and Password.
-•	Set up a web server that responds to /on and /off URLs.
-•	Upload the code to the ESP8266 using a micro USB cable.
-•	Get Local IP Address After uploading, open Serial Monitor to find the local IP address of ESP8266.
-•	Create Applets on IFTTT - For "This", select Google Assistant → "Say a simple phrase". Command: "Turn on the light". For "That", choose Webhooks → "Make a web request". 
-•	Repeat to create another applet for command with URL.
-•	Test the System - Google Assistant triggers IFTTT → sends Webhook to ESP8266 → turns ON the relay (light).
-•	Say "Turn off the ligh to switch it OFF, Say "Turn on the light" to switch it ON.
+## Output:
+ 
+<img width="1918" height="867" alt="Screenshot 2025-11-10 214450" src="https://github.com/user-attachments/assets/0d31132f-f699-4fee-9fd8-f16a68692456" />
 
 
-# Output:
-
-# Result:
-
+## Result:
+Thus measure the LDR Sensor using Photoresistor with Arduino UNO Board/ESP-32 using Tinker CAD has been Verified Successfully.
